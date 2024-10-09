@@ -5,7 +5,8 @@ import hashlib
 
 '''
 world更新条件
-(_id == update._id)&&(_ts < update._ts)&&(_type == update._type)
+1.(_id == update._id)&&(_ts < update._ts)&&(_type == update._type)
+2.公钥匹配
 '''
 
 def parseUintFromBytes(data, offset, length):
