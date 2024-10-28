@@ -1,0 +1,8 @@
+planet
+__pycache__
+world.bin
+parsed_data.json
+current.c25519
+default.json
+out_world.bin
+test
