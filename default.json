@@ -1,0 +1,77 @@
+{
+    "type": 1,
+    "id": 149604618,
+    "timestamp": 1567191349589,
+    "public_key": "640ddfa3cc9abac6cd42332373034c3bb6ed7d04de90b2bedc3395000d94a9423069d16351fb8cdf911162bb7a9748b231b24450eaee4fdb5a27b7b0d7a70cce",
+    "signature": "4918be956902e1934420011fa5bb73385d1566f95c47867d4c7494d9039f55810bc5767ad6bb859d907ef03c639cd4d03c021981e6e4c33b31485c81241ae8056709bfe8d39db02f2a13497f4daa7c8fa5c4e323995347818d1a9b1be285c942",
+    "roots": [
+        {
+            "address": "3a46f1bf30",
+            "identity_type": 0,
+            "public_key": "76e66fab33e28549a62ee2064d1843273c2c300ba45c3f20bef02dbad225723bb59a9bb4b13535730961aeecf5a163ace477cceb0727025b99ac14a5166a09a3",
+            "stable_endpoints": [
+                {
+                    "type": 4,
+                    "ip": "185.180.13.82",
+                    "port": "9993"
+                },
+                {
+                    "type": 6,
+                    "ip": "2a02:6ea0:c815:0:0:0:0:0",
+                    "port": "9993"
+                }
+            ]
+        },
+        {
+            "address": "de8950a8b2",
+            "identity_type": 0,
+            "public_key": "1b3ada8251b91b6b6fa6535b8c7e2460918f4f729abdec97d3c7f3796868fb02f0de0b0ee554b2d59fc3524743eebfcf5315e790ed6d92db5bd10c28c09b40ef",
+            "stable_endpoints": [
+                {
+                    "type": 4,
+                    "ip": "207.246.73.245",
+                    "port": "443"
+                },
+                {
+                    "type": 6,
+                    "ip": "2001:19f0:9002:5cb:ec4:7aff:fe8f:69d9",
+                    "port": "443"
+                }
+            ]
+        },
+        {
+            "address": "34e0a5e174",
+            "identity_type": 0,
+            "public_key": "93efb50934788f856d5cfb9ca5be88e85b40965586b75befac900df77352c145a1ba7007569d37c77bfe52c0999f3bdc67a47a4a6000b720a883ce47aa2fb7f8",
+            "stable_endpoints": [
+                {
+                    "type": 4,
+                    "ip": "147.75.92.2",
+                    "port": "443"
+                },
+                {
+                    "type": 6,
+                    "ip": "2604:1380:3000:7100:0:0:0:1",
+                    "port": "443"
+                }
+            ]
+        },
+        {
+            "address": "992fcf1db7",
+            "identity_type": 0,
+            "public_key": "206ed59350b31916f749a1f85dffb3a8787dcbf83b8c6e9448d4e3ea0e3369301be716c3609344a9d1533850fb4460c50af43322bcfc8e13d3301a1f1003ceb6",
+            "stable_endpoints": [
+                {
+                    "type": 4,
+                    "ip": "195.181.173.159",
+                    "port": "443"
+                },
+                {
+                    "type": 6,
+                    "ip": "2a02:6ea0:c024:0:0:0:0:0",
+                    "port": "443"
+                }
+            ]
+        }
+    ]
+}
