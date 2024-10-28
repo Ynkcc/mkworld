@@ -11,15 +11,18 @@ def main():
     page = st.sidebar.radio("Select Page", ("JSON to Binary", "Binary to JSON"))
 
     if page == "JSON to Binary":
-        # 加载 default.json 文件内容
-        default_json_path = "default.json"
-        if os.path.exists(default_json_path):
-            with open(default_json_path, "r") as f:
-                default_json_data = json.load(f)
-
+        if "json_input" not in st.session_state:
+            # 加载 default.json 文件内容
+            default_json_path = "default.json"
+            if os.path.exists(default_json_path):
+                with open(default_json_path, "r") as f:
+                    default_json_data = json.load(f)
+                    st.session_state.json_input = json.dumps(default_json_data, indent=4)
+            else:
+                st.session_state.json_input = "{}"
         # 显示 JSON 编辑器
         json_input = st_ace(
-            value=json.dumps(default_json_data, indent=4),
+            value=st.session_state.json_input,
             language="json",
             theme="monokai",
             height=300
@@ -27,12 +30,20 @@ def main():
 
         # 上传 current.c25519 文件
         key_file = st.file_uploader("Upload current.c25519 file", type=["c25519"])
-
+        
         # 生成行星并下载
         if st.button("Generate Planet"):
             # 检查用户是否上传了密钥文件
             if key_file is not None:
                 buffer = key_file.read()
+                #保存密钥
+                st.session_state.key_file=buffer
+                keypairs = readKeypairs(buffer)
+                if keypairs is None:
+                    st.error("Invalid key pair file.")
+                    return
+            elif "key_file" in st.session_state and st.session_state.key_file is not None:
+                buffer=st.session_state.key_file
                 keypairs = readKeypairs(buffer)
                 if keypairs is None:
                     st.error("Invalid key pair file.")
@@ -40,11 +51,12 @@ def main():
             else:
                 # 生成新的密钥对
                 keypairsBytes = writeKeypairs()
+                #保存密钥
+                st.session_state.key_file=keypairsBytes
                 keypairs = readKeypairs(keypairsBytes)
-
-                # 提供下载链接
-                st.download_button("Download Generated Key Pair File", bytes(keypairsBytes), file_name="current.c25519")
-
+       
+            # 保存文本框
+            st.session_state.json_input = json_input
             # 将编辑后的 JSON 转换为二进制文件
             edited_json_data = json.loads(json_input)
             # 替换公钥
@@ -53,6 +65,11 @@ def main():
 
             # 提供下载链接
             st.download_button("Download Planet Binary", bin_data, file_name="planet")
+
+        # 提供下载链接
+        if "key_file" in st.session_state and st.session_state.key_file is not None:
+            st.download_button("Download Generated Key Pair File", bytes(st.session_state.key_file), file_name="current.c25519")
+
 
     elif page == "Binary to JSON":
         uploaded_file = st.file_uploader("Upload planet file")
