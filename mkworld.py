@@ -4,6 +4,7 @@ import nacl.bindings
 import hashlib
 import json
 import os
+import ipaddress
 
 '''
 world更新条件
@@ -241,12 +242,13 @@ def hexToBytes(hexStr):
 
 def ipToBytes(ipAddress, ipType):
     """将 IP 地址转换为字节，支持 IPv4 和 IPv6"""
-    if ipType == 0x04:
-        return bytes(map(int, ipAddress.split('.')))
-    elif ipType == 0x06:
-        segments = ipAddress.split(':')
-        return b''.join(int(segment, 16).to_bytes(2, byteorder='big') for segment in segments)
-    return b''
+    try:
+        if ipType == 0x04:  # IPv4
+            return ipaddress.IPv4Address(ipAddress).packed
+        elif ipType == 0x06:  # IPv6
+            return ipaddress.IPv6Address(ipAddress).packed
+    except ipaddress.AddressValueError:
+        return b''
 
 
 def writeWorldDataAsBytes(WorldInfo, forSign=False):

@@ -73,20 +73,21 @@ def main():
 
     elif page == "Binary to JSON":
         uploaded_file = st.file_uploader("Upload planet file")
-        if uploaded_file is not None:
-            buffer = uploaded_file.read()
-            json_data = bin2json(buffer)
+        if st.button("Parse Planet File"):
+            if uploaded_file is not None:
+                buffer = uploaded_file.read()
+                json_data = bin2json(buffer)
 
-            if json_data:
-                # 显示 JSON 编辑器
-                json_input = st_ace(
-                    value=json.dumps(json_data, indent=4),
-                    language="json",
-                    theme="monokai",
-                    height=300
-                )
-            else:
-                st.error("Failed to convert binary file to JSON.")
+                if json_data:
+                    # 显示 JSON 编辑器
+                    json_input = st_ace(
+                        value=json.dumps(json_data, indent=4),
+                        language="json",
+                        theme="monokai",
+                        height=300
+                    )
+                else:
+                    st.error("Failed to convert binary file to JSON.")
 
 if __name__ == "__main__":
     main()
