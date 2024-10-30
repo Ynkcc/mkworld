@@ -17,7 +17,19 @@ win要加-lws2_32 建议使用msys2编译
 c++ -std=c++11 -I../.. -I../../ext -I.. -g -o mkworld ../../node/C25519.cpp ../../node/Salsa20.cpp ../../node/SHA512.cpp ../../node/Identity.cpp ../../node/Utils.cpp ../../node/InetAddress.cpp ../../osdep/OSUtils.cpp mkworld.cpp -lm -lws2_32
 ```
 
-## main.py
+## mkworld.py
 mkworld的python版本
+具体调用方法可参考文件中的
+```
+if __name__ == '__main__':
+    ...
+```
 
-基本逻辑弄好了 得改改才能用
+## streamlit_deploy.py
+使用streamlit框架的一个简易前端页面
+
+本项目已托管在 [streamlit.io](https://share.streamlit.io/)
+
+可通过以下链接直接访问
+
+`https://mkworld.streamlit.app`

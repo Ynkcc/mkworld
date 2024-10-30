@@ -4,7 +4,7 @@
 type_byte：1 字节，文件的类型。
 id_bytes：8 字节，文件的唯一标识符。
 ts_bytes：8 字节，时间戳。
-public_key：64 字节，文件的两个公钥 前一个不参与校验。
+public_key：64 字节，文件的两个公钥 第一个为ECDH公钥 第二个为ED25519公钥。
 signature：96 字节，签名。
 ```
 

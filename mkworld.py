@@ -1,5 +1,6 @@
 import binascii
 from nacl.signing import SigningKey
+from nacl.public import PrivateKey as ECDHPrivateKey
 import nacl.bindings
 import hashlib
 import json
@@ -111,18 +112,6 @@ def parseWorldFile(filePath):
         data = f.read()
     return bin2json(data)
 
-
-def generateKeypair():
-    """生成密钥对"""
-    signingKey = SigningKey.generate()
-    verifyKey = signingKey.verify_key
-
-    privateKey = signingKey.encode()
-    publicKey = verifyKey.encode()
-
-    return privateKey, publicKey
-
-
 def derivePublicKey(privateKey):
     """从私钥读取公钥"""
     signingKey = SigningKey(privateKey[:32])
@@ -138,9 +127,9 @@ def readKeypairs(buffer):
         return None
 
     publicKey1 = bytes(buffer[:32])
-    publicKey2= bytes(buffer[32:64])
-    privateKey1= bytes(buffer[64:96])
-    privateKey2= bytes(buffer[96:128])
+    publicKey2 = bytes(buffer[32:64])
+    privateKey1 = bytes(buffer[64:96])
+    privateKey2 = bytes(buffer[96:128])
 
     keypairs = {
         "publicKey1": publicKey1,
@@ -155,18 +144,18 @@ def readKeypairs(buffer):
 
     # 校验密钥对
     try:
-        # 校验第一个密钥对
-        signingKey1 = SigningKey(privateKey1)
-        derivedPublicKey1 = signingKey1.verify_key.encode()
+        # 校验 ECDH 密钥对
+        ecdhPrivateKey1 = ECDHPrivateKey(privateKey1)
+        derivedPublicKey1 = ecdhPrivateKey1.public_key.encode()
         if derivedPublicKey1 != publicKey1:
-            print("密钥对 1 校验失败：公钥不匹配")
+            print("密钥对 1 校验失败：ECDH 公钥不匹配")
             return None
 
-        # 校验第二个密钥对
+        # 校验 ED25519 密钥对
         signingKey2 = SigningKey(privateKey2)
         derivedPublicKey2 = signingKey2.verify_key.encode()
         if derivedPublicKey2 != publicKey2:
-            print("密钥对 2 校验失败：公钥不匹配")
+            print("密钥对 2 校验失败：ED25519 公钥不匹配")
             return None
 
         print("密钥对校验成功：公钥匹配")
@@ -178,10 +167,17 @@ def readKeypairs(buffer):
 
 def writeKeypairs():
     """
-    生成两对密钥对并返回包含所有密钥的字节数组
+    生成 ECDH 和 ED25519 密钥对并返回包含所有密钥的字节数组
     """
-    privateKey1, publicKey1 = generateKeypair()
-    privateKey2, publicKey2 = generateKeypair()
+    # 生成 ECDH 密钥对
+    ecdhPrivateKey1 = ECDHPrivateKey.generate()
+    publicKey1 = ecdhPrivateKey1.public_key.encode()
+    privateKey1 = ecdhPrivateKey1.encode()
+
+    # 生成 ED25519 密钥对
+    signingKey2 = SigningKey.generate()
+    publicKey2 = signingKey2.verify_key.encode()
+    privateKey2 = signingKey2.encode()
 
     # 创建包含两对密钥的字节数组
     data = bytearray()
