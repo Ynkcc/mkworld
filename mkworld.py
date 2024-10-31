@@ -216,7 +216,10 @@ def signMessage(privateKeyBytes, publicKeyBytes, message):
     
     hram = hashlib.sha512(hramInput).digest()
     scs = nacl.bindings.crypto_core_ed25519_scalar_reduce(hram)
-
+    extsk = bytearray(extsk)
+    for i in range(32):
+        extsk[32 + i] = 0
+    extsk=bytes(extsk)
     scsk = nacl.bindings.crypto_core_ed25519_scalar_reduce(extsk)
     scs = nacl.bindings.crypto_core_ed25519_scalar_mul(scs, scsk)
     finalScalar = nacl.bindings.crypto_core_ed25519_scalar_add(scs, rPoint)
