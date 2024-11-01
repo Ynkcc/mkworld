@@ -33,3 +33,12 @@ if __name__ == '__main__':
 可通过以下链接直接访问
 
 `https://mkworld.streamlit.app`
+
+#### 自行部署参考命令
+
+```
+git clone https://github.com/Ynkcc/mkworld
+cd mkworld
+pip install -r requirements.txt
+streamlit run streamlit_deploy.py
+```
